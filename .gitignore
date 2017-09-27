@@ -1,5 +1,9 @@
 logs
 *.log
 npm-debug.log*
-node_modules/
 .npm
+.DS_Store
+._.DS_Store
+config.js
+/node_modules
+/dist

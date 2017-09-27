@@ -1,13 +1,17 @@
-const express = require('express');
-const app = express();
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
-app.use(express.static('node_modules'));
-
-app.get('/', function (req, res) {
-    res.sendFile('./index.html', {root: __dirname});
+io.on('connection', socket => {
+    socket.on('package', response => {
+        io.emit('newPackage', response);
+    });
 });
 
-app.listen(3000, () => {
+/**
+ *  3100 is main server
+ */
+http.listen(3001, () => {
     console.log(`
          ____  ___    _   __________   _  __
         / __  \/   |  / | / / ____/ /  | |/ /

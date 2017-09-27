@@ -1,0 +1,13 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~font-awesome/css/font-awesome.min.css';
+@import '~ionicons/dist/css/ionicons.min.css';
+@import '~admin-lte/dist/css/AdminLTE.min.css';
+@import '~admin-lte/dist/css/skins/skin-black.min.css';
+
+.box__icon {
+    line-height: inherit;
+}
+
+.ReactModal__Content {
+    z-index: 100000;
+}
