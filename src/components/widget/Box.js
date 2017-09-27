@@ -6,9 +6,9 @@ class Box extends Component {
     }
 
     render() {
-        const {className, value, title, remove} = this.props;
+        const {value, title, remove, type} = this.props;
         return (
-            <div className={className}>
+            <div className="col-md-3 col-sm-6 col-xs-12">
                 <div className="info-box">
                     <button
                         onClick={remove}
@@ -17,7 +17,7 @@ class Box extends Component {
                     >
                         <i className="fa fa-times"></i>
                     </button>
-                    <span className="info-box-icon bg-aqua">
+                    <span className={"info-box-icon " + type}>
                         <i className="fa fa-thermometer box__icon"></i>
                     </span>
                     

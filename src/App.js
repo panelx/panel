@@ -5,7 +5,8 @@ import './assets/css/style.css';
 
 import Header from './components/Header';
 import Aside from './components/Aside';
-import Box from './components/widget/Box';
+import AsideAlt from './components/AsideAlt';
+import Dashboard from './components/Dashboard';
 import NewWidgetForm from './components/tools/NewWidgetForm';
 
 class App extends Component {
@@ -14,10 +15,13 @@ class App extends Component {
         
         this.initSocket();
         
+        const widgetsPreset = JSON.parse(localStorage.getItem('widgets'));
+        
         this.state = {
             'data': {},
             'sidebar': 1,
-            'widgets': []
+            'aside': 0,
+            'widgets': widgetsPreset ? widgetsPreset : []
         }
     }
     
@@ -41,10 +45,18 @@ class App extends Component {
         }))
     }
     
+    toggleAside = () => {
+        this.setState(prev => ({
+            aside: !prev.aside
+        }))
+    }
+    
     addWidget = (widget) => {
         this.setState(prev => ({
             widgets: [...prev.widgets, widget]
-        }));
+        }), () => {
+            localStorage.setItem('widgets', JSON.stringify(this.state.widgets));
+        });
     }
     
     removeWidget = (id) => {
@@ -54,28 +66,38 @@ class App extends Component {
     }
     
     render() {
-        const {data, widgets, sidebar} = this.state;
+        const {data, widgets, sidebar, aside} = this.state;
 
         return (
-            <div className={"hold-transition skin-black sidebar-mini " + (sidebar ? 'sidebar-collapse' : '')}>
+            <div
+                className={
+                    "hold-transition skin-black-light sidebar-mini " +
+                    (sidebar ? 'sidebar-collapse' : '')
+                }
+            >
                 <div className="wrapper">
-                    <Header toggleSidebar={this.toggleSidebar}/>
+                    <Header
+                        toggleSidebar={this.toggleSidebar}
+                        toggleAside={this.toggleAside}
+                    />
                     <Aside />
                     <div className="content-wrapper">
                         <section className="content container-fluid">
-                            <NewWidgetForm {...{data}} addWidget={this.addWidget}/>
-                            <div className="row">
-                                {widgets && widgets.map((item, index) => <Box
-                                        key={index}
-                                        title={item.title}
-                                        value={data[item.scriptId]}
-                                        className="col-md-3 col-sm-6 col-xs-12"
-                                        remove={() => this.removeWidget(index)}
-                                    />
-                                )}
-                            </div>
+                            <Dashboard
+                                {...{data}}
+                                layout={widgets}
+                                removeWidget={this.removeWidget}
+                            />
                         </section>
                     </div>
+                    <AsideAlt
+                        open={aside}
+                    >
+                        <NewWidgetForm
+                            {...{data}}
+                            addWidget={this.addWidget}
+                        />
+                    </AsideAlt>
                     <div className="control-sidebar-bg"></div>
                 </div>
             </div>

@@ -7,6 +7,8 @@ class NewWidgetForm extends Component {
         this.state = {
             title: '',
             scriptId: 0,
+            type: 'bg-aqua',
+            widgetType: 'TextBox',
             collapsed: 1
         }
     }
@@ -25,15 +27,27 @@ class NewWidgetForm extends Component {
     
     handleSubmit = () => {
         const {addWidget} = this.props;
-        const {title, scriptId} = this.state;
+        const {title, scriptId, type, widgetType} = this.state;
         
-        addWidget({title, scriptId});
+        addWidget({title, scriptId, type, widgetType});
     }
     
     toggle = () => {
         this.setState(prev => ({
             collapsed: !prev.collapsed
         }));
+    }
+    
+    handleTypeChange = (e) => {
+        this.setState({
+            type: e.target.value
+        })
+    }
+    
+    handleWidgetChange = (e) => {
+        this.setState({
+            widgetType: e.target.value
+        })
     }
     
     render() {
@@ -53,6 +67,23 @@ class NewWidgetForm extends Component {
                             <div className="form-group">
                                 <label>Nazwa</label>
                                 <input onChange={this.handleNameChange} type="text" className="form-control" />
+                            </div>
+                            
+                            <div className="form-group">
+                                <label>Typ</label>
+                                <select className="form-control" onChange={this.handleTypeChange}>
+                                    <option value="bg-aqua">Aqua</option>
+                                    <option value="bg-green">Green</option>
+                                    <option value="bg-yellow">Yellow</option>
+                                    <option value="bg-red">Red</option>
+                                </select>
+                            </div>
+                            
+                            <div className="form-group">
+                                <label>Widget</label>
+                                <select className="form-control" onChange={this.handleWidgetChange}>
+                                    <option>TextBox</option>
+                                </select>
                             </div>
                             
                             <div className="form-group">

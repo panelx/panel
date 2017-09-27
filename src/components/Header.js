@@ -6,7 +6,7 @@ class Header extends Component {
     }
 
     render() {
-        const {toggleSidebar} = this.props;
+        const {toggleSidebar, toggleAside} = this.props;
         return (
             <header className="main-header">
                 <a className="logo">
@@ -21,12 +21,9 @@ class Header extends Component {
                     
                     <div className="navbar-custom-menu">
                         <ul className="nav navbar-nav">
-                            
-                            <li className="dropdown user user-menu">
-                                <a href="#">
-                                    <span className="hidden-xs">Alexander Pierce</span>
-                                </a>
-                            </li>
+                            <li>
+                                <a href="#" onClick={toggleAside}><i className="fa fa-gears" /></a>
+                              </li>
                         </ul>
                     </div>
                 </nav>
