@@ -6,7 +6,8 @@ class Box extends Component {
     }
 
     render() {
-        const {value, title, remove, type} = this.props;
+        const {data, title, remove, type} = this.props;
+        if(!data) return false;
         return (
             <div className="col-md-3 col-sm-6 col-xs-12">
                 <div className="info-box">
@@ -23,7 +24,7 @@ class Box extends Component {
                     
                     <div className="info-box-content">
                         <span className="info-box-text">{title}</span>
-                        <span className="info-box-number">{value}</span>
+                        <span className="info-box-number">{data[data.length - 1].data}</span>
                     </div>
                 </div>
             </div>

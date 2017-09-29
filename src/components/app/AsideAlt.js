@@ -13,7 +13,7 @@ class AsideAlt extends Component {
                     "control-sidebar control-sidebar-dark " + 
                     (open ? 'control-sidebar-open' : '')
                 }
-            >
+                >
                 <div className="tab-content">
                     {children}
                 </div>

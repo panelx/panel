@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Widget from './widget/Widget';
+import Widget from '../widget/Widget';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -14,7 +14,7 @@ class Dashboard extends Component {
                     <Widget
                         key={index}
                         {...widget}
-                        value={data[widget.scriptId]}
+                        data={data[widget.scriptId]}
                         remove={() => removeWidget(index)}
                     />
                 ))}

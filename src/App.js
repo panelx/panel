@@ -3,10 +3,10 @@ import ioClient from 'socket.io-client';
 
 import './assets/css/style.css';
 
-import Header from './components/Header';
-import Aside from './components/Aside';
-import AsideAlt from './components/AsideAlt';
-import Dashboard from './components/Dashboard';
+import Header from './components/app/Header';
+import Aside from './components/app/Aside';
+import Modal from './components/app/Modal';
+import Dashboard from './components/app/Dashboard';
 import NewWidgetForm from './components/tools/NewWidgetForm';
 
 class App extends Component {
@@ -20,7 +20,7 @@ class App extends Component {
         this.state = {
             'data': {},
             'sidebar': 1,
-            'aside': 0,
+            'modal': false,
             'widgets': widgetsPreset ? widgetsPreset : []
         }
     }
@@ -32,7 +32,9 @@ class App extends Component {
             this.socket.on('newPackage', response => {
                 this.setState({
                     data: Object.assign({}, this.state.data, {
-                        [response.scriptId]: response.data
+                        [response.scriptId]: this.state.data[response.scriptId] ? 
+                            [ ...this.state.data[response.scriptId], response ] :
+                            [response]
                     })
                 })
             });
@@ -45,9 +47,9 @@ class App extends Component {
         }))
     }
     
-    toggleAside = () => {
+    toggleModal = () => {
         this.setState(prev => ({
-            aside: !prev.aside
+            modal: !prev.modal
         }))
     }
     
@@ -61,45 +63,45 @@ class App extends Component {
     
     removeWidget = (id) => {
         this.setState(prev => ({
-            widgets: prev.widgets.slice(id, -1)
-        }));
+            widgets: prev.widgets.slice(0,id).concat(prev.widgets.slice(id+1))
+        }), () => {
+            localStorage.setItem('widgets', JSON.stringify(this.state.widgets));
+        });
     }
     
     render() {
-        const {data, widgets, sidebar, aside} = this.state;
-
+        const {data, widgets, sidebar, aside, modal} = this.state;
+        
         return (
             <div
                 className={
-                    "hold-transition skin-black-light sidebar-mini " +
+                    "wrapper sidebar-mini " +
                     (sidebar ? 'sidebar-collapse' : '')
                 }
-            >
-                <div className="wrapper">
-                    <Header
-                        toggleSidebar={this.toggleSidebar}
-                        toggleAside={this.toggleAside}
+                >
+                {modal && <Modal title="Add widget" toggle={this.toggleModal}>
+                    <NewWidgetForm
+                        {...{data}}
+                        toggle={this.toggleModal}
+                        addWidget={this.addWidget}
                     />
-                    <Aside />
-                    <div className="content-wrapper">
-                        <section className="content container-fluid">
-                            <Dashboard
-                                {...{data}}
-                                layout={widgets}
-                                removeWidget={this.removeWidget}
-                            />
-                        </section>
-                    </div>
-                    <AsideAlt
-                        open={aside}
-                    >
-                        <NewWidgetForm
+                </Modal>}
+                
+                <Header
+                    toggleSidebar={this.toggleSidebar}
+                    toggleModal={this.toggleModal}
+                    />
+                <Aside />
+                <div className="content-wrapper">
+                    <section className="content container-fluid">
+                        <Dashboard
                             {...{data}}
-                            addWidget={this.addWidget}
-                        />
-                    </AsideAlt>
-                    <div className="control-sidebar-bg"></div>
+                            layout={widgets}
+                            removeWidget={this.removeWidget}
+                            />
+                    </section>
                 </div>
+                <div className="control-sidebar-bg"></div>
             </div>
         );
     }

@@ -11,3 +11,14 @@
 .ReactModal__Content {
     z-index: 100000;
 }
+
+.modal--open {
+    display: block;
+}
+
+.header__icon {
+    float: left;
+    color: #333;
+    border-right: 1px solid #d2d6de;
+    padding: 18px 18px;
+}
