@@ -71,6 +71,8 @@ class NewWidgetForm extends Component {
                             <option>TextBox</option>
                             <option>TextBox2</option>
                             <option>LineChart</option>
+                            <option>RawOutput</option>
+                            <option>AreaChart</option>
                         </select>
                     </div>
                     

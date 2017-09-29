@@ -3,6 +3,7 @@
 @import '~ionicons/dist/css/ionicons.min.css';
 @import '~admin-lte/dist/css/AdminLTE.min.css';
 @import '~admin-lte/dist/css/skins/skin-black-light.min.css';
+@import './console.css';
 
 .box__icon {
     line-height: inherit;

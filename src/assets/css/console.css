@@ -1,0 +1,12 @@
+.console {
+    background-color: #333;
+    color: #fff;
+    font-family: monospace;
+    padding: 1rem;
+    height: 200px;
+    overflow-y: hidden;
+}
+
+.console__line {
+    margin:0;
+}

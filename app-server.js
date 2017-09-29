@@ -3,7 +3,9 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 io.on('connection', socket => {
+    console.log('> Connected.');
     socket.on('package', response => {
+        console.log('> Package: ' + JSON.stringify(response));
         io.emit('newPackage', response);
     });
 });
