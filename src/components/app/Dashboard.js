@@ -8,7 +8,6 @@ class Dashboard extends Component {
     
     render() {
         const {data, layout, removeWidget} = this.props;
-        console.log(layout);
 
         if(!layout) return false;
         return (
