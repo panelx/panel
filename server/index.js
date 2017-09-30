@@ -1,4 +1,5 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var mongoose = require('mongoose');
@@ -7,7 +8,6 @@ var bodyParser = require('body-parser');
 var Dashboard = require('./model/Dashboard.js');
 var Widget = require('./model/Widget.js');
 
-
 mongoose.Promise = global.Promise;
 
 app.use(cors());
@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-
+app.use(express.static('../dist/'));
 
 mongoose.connect('mongodb://localhost/panelx', {
     useMongoClient: true
@@ -81,6 +81,10 @@ app.get('/dashboards', (req, res) => {
     Dashboard.find().populate('widgets').exec((err, dashboards) => {
         res.send(dashboards);
     });
+});
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 http.listen(3001, () => {

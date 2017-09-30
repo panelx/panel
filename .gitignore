@@ -6,4 +6,3 @@ npm-debug.log*
 ._.DS_Store
 config.js
 /node_modules
-/dist
