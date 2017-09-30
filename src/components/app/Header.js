@@ -6,7 +6,7 @@ class Header extends Component {
     }
 
     render() {
-        const {toggleSidebar, toggleModal} = this.props;
+        const {toggleSidebar, toggleModal, removeDashboard} = this.props;
         return (
             <header className="main-header">
                 <a className="logo">
@@ -20,6 +20,9 @@ class Header extends Component {
                     </a>
                     <a href="#" className="header__icon" onClick={toggleModal}>
                         <i className="fa fa-plus-circle"/>
+                    </a>
+                    <a href="#" className="header__icon" onClick={removeDashboard}>
+                        <i className="fa fa-minus-circle"/>
                     </a>
                 </nav>
             </header>

@@ -9,20 +9,44 @@ import Modal from './components/app/Modal';
 import Dashboard from './components/app/Dashboard';
 import NewWidgetForm from './components/tools/NewWidgetForm';
 
+import axios from 'axios';
+
 class App extends Component {
     constructor(props){
         super(props);
         
         this.initSocket();
-        
-        const widgetsPreset = JSON.parse(localStorage.getItem('widgets'));
-        
+
         this.state = {
             'data': {},
             'sidebar': 1,
             'modal': false,
-            'widgets': widgetsPreset ? widgetsPreset : []
+            'dashboards': [],
+            'dashboard': 0
         }
+    }
+    
+    componentDidMount = () => {
+        axios.get('http://localhost:3001/dashboards').then(response => {
+            this.setState({
+                dashboards: response.data
+            });
+        });
+    }
+    
+    updateDashboards = (response) => {
+        this.setState({
+            dashboards: response
+        })
+    }
+    
+    removeDashboard = () => {
+        axios.delete('http://localhost:3001/dashboard/' + this.getDashboardId())
+            .then(response => {
+                this.setState({
+                    dashboards: response.data
+                });
+            });
     }
     
     initSocket = () => {
@@ -53,24 +77,36 @@ class App extends Component {
         }))
     }
     
+    getDashboardId = () => this.state.dashboards[this.state.dashboard]._id;
+    
     addWidget = (widget) => {
-        this.setState(prev => ({
-            widgets: [...prev.widgets, widget]
-        }), () => {
-            localStorage.setItem('widgets', JSON.stringify(this.state.widgets));
+        const {dashboard} = this.state;
+        
+        axios.post(
+            'http://localhost:3001/widget/new?dashboardId=' + this.getDashboardId(), widget
+        ).then(response => {
+            this.updateDashboards(response.data);
         });
     }
     
     removeWidget = (id) => {
-        this.setState(prev => ({
-            widgets: prev.widgets.slice(0,id).concat(prev.widgets.slice(id+1))
-        }), () => {
-            localStorage.setItem('widgets', JSON.stringify(this.state.widgets));
+        axios.delete(
+            'http://localhost:3001/widget/' + id
+        ).then(response => {
+            this.updateDashboards(response.data);
+        });
+    }
+    
+    changeDashboard = (id) => {
+        this.setState({
+            dashboard: id
         });
     }
     
     render() {
-        const {data, widgets, sidebar, aside, modal} = this.state;
+        const {
+            data, widgets, sidebar, aside, modal, dashboards, dashboard
+        } = this.state;
         
         return (
             <div
@@ -90,16 +126,19 @@ class App extends Component {
                 <Header
                     toggleSidebar={this.toggleSidebar}
                     toggleModal={this.toggleModal}
+                    removeDashboard={this.removeDashboard}
                     />
-                <Aside />
+                <Aside
+                    {...{dashboards}}
+                    changeDashboard={this.changeDashboard}
+                    updateDashboards={this.updateDashboards}
+                />
                 <div className="content-wrapper">
-                    <section className="content container-fluid">
-                        <Dashboard
-                            {...{data}}
-                            layout={widgets}
-                            removeWidget={this.removeWidget}
-                            />
-                    </section>
+                    <Dashboard
+                        {...{data}}
+                        layout={dashboards[dashboard]}
+                        removeWidget={this.removeWidget}
+                    />
                 </div>
                 <div className="control-sidebar-bg"></div>
             </div>
