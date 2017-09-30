@@ -49,7 +49,7 @@ app.post('/widget/new', (req, res) => {
 app.post('/dashboard/new', (req, res) => {
     var d = new Dashboard({ title: req.body.title });
     d.save(() => {
-        Dashboard.find((err, dashboards) => {
+        Dashboard.find().populate('widgets').exec((err, dashboards) => {
             res.send(dashboards);
         });
     });
@@ -62,7 +62,7 @@ app.delete('/dashboard/:dId', (req, res) => {
         });
         
         d.remove((() => {
-            Dashboard.find((err, dashboards) => {
+            Dashboard.find().populate('widgets').exec((err, dashboards) => {
                 res.send(dashboards);
             });
         }));
@@ -71,7 +71,7 @@ app.delete('/dashboard/:dId', (req, res) => {
 
 app.delete('/widget/:wId', (req, res) => {
     Widget.find({_id: req.params.wId}).remove().exec((err, w) => {
-        Dashboard.find((err, dashboards) => {
+        Dashboard.find().populate('widgets').exec((err, dashboards) => {
             res.send(dashboards);
         });
     });
