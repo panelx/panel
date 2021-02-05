@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import TextWidget from './widgets/text';
 
-const Widget = (type, title) => {
+const Widget = ({data, type, title}) => {
   switch(type){
     default:
-      return <TextWidget title={title} />;
+      return <TextWidget data={data} title={title} />;
   }
 };
 
