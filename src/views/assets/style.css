@@ -1,0 +1,53 @@
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  color: aquamarine;
+  font-family: monospace;
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  padding: 20px;
+}
+
+.widget {
+  width: 30%;
+  height: 300px;
+  border: 1px solid aquamarine;
+  margin: .5rem;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+header {
+  width: calc(100% - 40px);
+  padding: 20px;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+header small {
+  font-size: 1rem;
+}
+
+p {
+  margin:0;
+  padding:0;
+}
+
+.widget__title {
+  background-color: aquamarine;
+  color: #000;
+  padding: .5rem 1rem;
+  border-bottom: 1px solid aquamarine;
+}
+
+.widget__body {
+  padding: 1rem;
+}

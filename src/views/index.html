@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PanelX 1.0</title>
+    <script src="/scripts/vue.global.js"></script>
+    <link rel="stylesheet" href="/assets/style.css">
+  </head>
+  <body>
+    <header>
+      <span>PanelX</span><small>v1.0</small>
+    </header>
+    <div id="dashboard" class="dashboard">
+      <div v-for="widget in widgets" class="widget">
+        <p class="widget__title">{{widget.widget.title}}</p>
+        <div class="widget__body">
+          <p v-for="entry in Object.entries(widget.data)">{{entry[0]}}: {{entry[1]}}</p>
+        </div>
+      </div>
+    </div>
+    <script src="/components/dashboard.js"></script>
+  </body>
+</html>

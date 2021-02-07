@@ -1,5 +1,9 @@
+import { WidgetDefinition } from "./server";
+
 interface CacheScriptStruct {
-  [date: string]: string
+  ver: number,
+  data: {[date: string]: string},
+  widget: WidgetDefinition
 }
 
 interface CacheStruct {
@@ -13,11 +17,8 @@ export default class Cache {
     return this.data;
   }
 
-  get(key: string): CacheScriptStruct {
-    if(this.data.hasOwnProperty(key)){
-      return this.data[key];
-    }
-    return {};
+  get(key: string): CacheScriptStruct | undefined {
+    return this.data.hasOwnProperty(key) ? this.data[key] : undefined;
   }
 
   set(key: string, data: CacheScriptStruct): void {

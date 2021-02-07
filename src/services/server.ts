@@ -3,6 +3,7 @@ import Logger from './logger';
 import Cache from './cache';
 import ScriptManager from './scriptManager';
 import { getKey } from './common';
+import * as path from 'path';
 
 export interface WidgetDefinition {
   key?: string,
@@ -20,6 +21,13 @@ const widgets: WidgetDefinition[] = [
     formula: "echo \"hello\"",
     interval: 1000,
     limit: 10
+  },
+  {
+    type: "text",
+    title: "Test",
+    formula: "echo \"mello\"",
+    interval: 4000,
+    limit: 20
   }
 ].map((w, i) => ({...w, key: getKey(i, w)}));
 
@@ -31,12 +39,12 @@ export default class Server {
     const app = express();
     const port = 3000;
 
-    app.set('views', 'src/views');
-    app.set('view engine', 'jsx');
-    app.engine('jsx', require('express-react-views').createEngine());
+    app.use('/scripts', express.static(__dirname + '/../../node_modules/vue/dist'));
+    app.use('/components', express.static(__dirname + '/../views/scripts'));
+    app.use('/assets', express.static(__dirname + '/../views/assets'));
 
     app.get('/', (req, res) => {
-      res.render('index', {widgets});
+      res.sendFile(path.join(__dirname + '/../views/index.html'));
     });
 
     app.get('/cache', (req, res) => {
