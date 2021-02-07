@@ -50,14 +50,22 @@ export default class ScriptManager {
   }
 
   private createLoops(): void {
-    this.loops = this.widgets.map((widget, i) => setInterval(async () => {
+    this.loops = this.widgets.map((widget, i) => {
       const key = getKey(i, widget);
-      Logger.log(`Script ${key} loop execution`);
-
-      const data = await call(widget.formula);
-      
-      this.writeData(key, data, widget.limit);
-    }, widget.interval));
+      if(widget.interval){
+        return setInterval(async () => {
+          Logger.log(`Script ${key} loop execution`);
+          const data = await call(widget.formula);
+          this.writeData(key, data, widget.limit);
+        }, widget.interval);
+      }else{
+        Logger.log(`Script ${key} execution`);
+        call(widget.formula)
+          .then(data => {
+            this.writeData(key, data, widget.limit);
+          });
+      }
+    });
   }
 
   private writeData(key: string, data: string, limit?: number) {

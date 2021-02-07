@@ -4,32 +4,18 @@ import Cache from './cache';
 import ScriptManager from './scriptManager';
 import { getKey } from './common';
 import * as path from 'path';
+import config from '../config';
 
 export interface WidgetDefinition {
   key?: string,
   type: string,
   title: string,
   formula: string,
-  interval: number,
+  interval?: number,
   limit?: number
 }
 
-const widgets: WidgetDefinition[] = [
-  {
-    type: "text",
-    title: "Test",
-    formula: "echo \"hello\"",
-    interval: 1000,
-    limit: 10
-  },
-  {
-    type: "text",
-    title: "Test",
-    formula: "echo \"mello\"",
-    interval: 4000,
-    limit: 20
-  }
-].map((w, i) => ({...w, key: getKey(i, w)}));
+const widgets: WidgetDefinition[] = config.widgets.map((w, i) => ({...w, key: getKey(i, w)}));
 
 export default class Server {
   constructor() {
