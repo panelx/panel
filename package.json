@@ -4,6 +4,7 @@
   "description": "Panel",
   "main": "dist/index.js",
   "scripts": {
+    "docker-build": "./node_modules/.bin/tsc & mkdir ./dist/views & cp -R ./src/views ./dist/views",
     "build": "./node_modules/.bin/tsc & cp -R ./src/views ./dist/views",
     "start": "node dist/index.js",
     "develop": "./node_modules/.bin/ts-node src/index.ts",
