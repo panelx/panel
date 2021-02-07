@@ -12,5 +12,7 @@ COPY . .
 RUN npm run prebuild
 RUN npm run build
 
+RUN ls ./dist
+
 EXPOSE 3000
 CMD [ "node", "dist/index.js" ]
