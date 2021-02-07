@@ -9,6 +9,7 @@ RUN npm install
 
 COPY . .
 
+RUN npm run prebuild
 RUN npm run build
 
 RUN ls ./dist
