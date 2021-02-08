@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as fs from 'fs';
 import Logger from './logger';
 import Cache from './cache';
 import ScriptManager from './scriptManager';
@@ -30,7 +31,9 @@ export default class Server {
     app.use('/assets', express.static(__dirname + '/../views/assets'));
 
     app.get('/', (req, res) => {
-      res.sendFile(path.join(__dirname + '/../views/index.html'));
+      const file = fs.readFileSync(path.join(__dirname + '/../views/index.html')).toString();
+      const clientPort = process.env.CLIENT_PORT;
+      res.send(file.replace("***PORT***", clientPort ? clientPort : String(port)));
     });
 
     app.get('/cache', (req, res) => {

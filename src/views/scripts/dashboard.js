@@ -6,7 +6,7 @@ const Dashboard = {
   },
   mounted() {
     setInterval(() => {
-      fetch('http://localhost:3000/cache')
+      fetch(`http://localhost:${port}/cache`)
         .then(d => d.json())
         .then(d => this.widgets = d);
     }, 1000);
