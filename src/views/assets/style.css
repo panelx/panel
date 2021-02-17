@@ -51,3 +51,26 @@ p {
 .widget__body {
   padding: 1rem;
 }
+
+.ct-chart, .ct-bar, .ct-label {
+  color: aquamarine;
+}
+
+.ct-series-a .ct-line {
+  stroke-width: 2px;
+}
+
+.ct-series-a .ct-point {
+  stroke-width: 4px;
+  stroke-linecap: circle;
+}
+
+.ct-series-a .ct-line,
+.ct-series-a .ct-point {
+  stroke: aquamarine;
+}
+
+.ct-series-b .ct-line,
+.ct-series-b .ct-point {
+  stroke: aquamarine;
+}

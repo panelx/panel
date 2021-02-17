@@ -26,7 +26,7 @@ export default class Server {
     const app = express();
     const port = 3000;
 
-    app.use('/scripts', express.static(__dirname + '/../../node_modules/vue/dist'));
+    app.use('/scripts', express.static(__dirname + '/../../node_modules'));
     app.use('/components', express.static(__dirname + '/../views/scripts'));
     app.use('/assets', express.static(__dirname + '/../views/assets'));
 

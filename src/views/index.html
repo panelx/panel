@@ -2,22 +2,19 @@
   <head>
     <meta charset="utf-8">
     <title>PanelX 1.0</title>
-    <script src="/scripts/vue.global.js"></script>
+    <script src="/scripts/vue/dist/vue.global.js"></script>
+    <script src="/scripts/chartist/dist/chartist.min.js"></script>
+    <link rel="stylesheet" href="/scripts/chartist/dist/chartist.min.css">
     <link rel="stylesheet" href="/assets/style.css">
   </head>
   <body>
     <header>
       <span>PanelX</span><small>v1.0</small>
     </header>
-    <div id="dashboard" class="dashboard">
-      <div v-for="widget in widgets" class="widget">
-        <p class="widget__title">{{widget.widget.title}}</p>
-        <div class="widget__body">
-          <p v-for="entry in Object.entries(widget.data)">{{entry[0]}}: {{entry[1]}}</p>
-        </div>
-      </div>
+    <div id="app">
+      <Dashboard v-bind:widgets="widgets"></Dashboard>
     </div>
-    <script src="/components/dashboard.js"></script>
+    <script type="module" src="/components/app.js"></script>
     <script>const port = ***PORT***;</script>
   </body>
 </html>
