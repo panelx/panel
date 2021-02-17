@@ -15,6 +15,13 @@ const config = {
      limit: 20
    },
    {
+     type: "text",
+     title: "Text",
+     formula: "echo \"Mello, mello, mello, mello, mello, mello, mello, mello, mello.\"",
+     interval: 4000,
+     limit: 20
+   },
+   {
      type: "pie",
      title: "Pie",
      formula: "echo \"mello\"",

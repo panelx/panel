@@ -8,6 +8,7 @@ const Widget = {
         <LineChartWidget v-if="instance.widget.type === 'line'" v-bind:data="instance.data"></LineChartWidget>
         <BarChartWidget v-if="instance.widget.type === 'bar'" v-bind:data="instance.data"></BarChartWidget>
         <PieChartWidget v-if="instance.widget.type === 'pie'" v-bind:data="instance.data"></PieChartWidget>
+        <TextWidget v-if="instance.widget.type === 'text'" v-bind:data="instance.data"></TextWidget>
       </div>
     </div>
   `
