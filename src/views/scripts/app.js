@@ -3,6 +3,7 @@ import DebugWidget from './components/widgets/DebugWidget.js';
 import LineChartWidget from './components/widgets/LineChartWidget.js';
 import BarChartWidget from './components/widgets/BarChartWidget.js';
 import PieChartWidget from './components/widgets/PieChartWidget.js';
+import TextWidget from './components/widgets/TextWidget.js';
 import Dashboard from './components/Dashboard.js';
 
 const app = Vue.createApp({
@@ -26,4 +27,5 @@ app.component('DebugWidget', DebugWidget);
 app.component('LineChartWidget', LineChartWidget);
 app.component('BarChartWidget', BarChartWidget);
 app.component('PieChartWidget', PieChartWidget);
+app.component('TextWidget', TextWidget);
 app.mount('#app');
